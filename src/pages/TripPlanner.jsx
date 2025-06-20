@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import TripForm from "../components/TripForm";
 import TripEditDetails from "../components/TripEditDetails";
+import { useLocation } from "react-router-dom";
 
 export default function TripPlanner() {
+  const location = useLocation();
+  const destination = location.state?.destination;
+
   const [newTrip, setNewTrip] = useState(null);
 
   return (
@@ -34,7 +38,7 @@ export default function TripPlanner() {
           {/* Form Content */}
           <div className="p-8">
             {newTrip === null ? (
-              <TripForm onTripCreate={setNewTrip} />
+              <TripForm onTripCreate={setNewTrip} destination={destination} />
             ) : (
               <TripEditDetails
                 trip={newTrip}

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCities } from "../hooks/useCities";
 
-export default function TripForm({ onTripCreate }) {
+export default function TripForm({ onTripCreate, destination }) {
   const {
     register,
     handleSubmit,
@@ -10,6 +10,12 @@ export default function TripForm({ onTripCreate }) {
     watch,
     setValue,
   } = useForm();
+
+  useEffect(() => {
+    if (destination) {
+      setValue("location", destination);
+    }
+  }, [destination, setValue]);
 
   function onSubmit(data) {
     onTripCreate(data);

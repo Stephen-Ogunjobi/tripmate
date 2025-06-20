@@ -98,7 +98,7 @@ export default function Footer() {
                 return (
                   <a
                     key={index}
-                    href={social.href}
+                    // href={social.href}
                     aria-label={social.label}
                     className="w-10 h-10 bg-secondary hover:bg-white hover:text-secondary rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110"
                   >
@@ -116,7 +116,7 @@ export default function Footer() {
               {footerLinks.company.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={link.href}
+                    // href={link.href}
                     className="font-worksans text-gray-300 hover:text-secondary transition-colors duration-200 text-sm"
                   >
                     {link.name}
@@ -133,7 +133,7 @@ export default function Footer() {
               {footerLinks.services.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={link.href}
+                    // href={link.href}
                     className="font-worksans text-gray-300 hover:text-secondary transition-colors duration-200 text-sm"
                   >
                     {link.name}
@@ -150,7 +150,7 @@ export default function Footer() {
               {footerLinks.support.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={link.href}
+                    // href={link.href}
                     className="font-worksans text-gray-300 hover:text-secondary transition-colors duration-200 text-sm"
                   >
                     {link.name}
@@ -167,7 +167,7 @@ export default function Footer() {
               {footerLinks.legal.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={link.href}
+                    // href={link.href}
                     className="font-worksans text-gray-300 hover:text-secondary transition-colors duration-200 text-sm"
                   >
                     {link.name}
@@ -217,9 +217,15 @@ export default function Footer() {
               <span>© 2024 TripMate. All rights reserved.</span>
             </div>
             <div className="flex items-center gap-2 font-worksans text-sm text-gray-300">
-              <span>Made with</span>
-              <FaHeart className="text-red-400 text-xs" />
-              <span>for travelers worldwide</span>
+              <div className="flex flex-col items-center">
+                <span>Developed & designed by</span>
+                <span> Stephen Ogunjobi</span>
+                <span>
+                  <a href="mailto:stephenogunjobi400@gmail.com">
+                    stephenogunjobi400@gmail.com
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
         </div>
