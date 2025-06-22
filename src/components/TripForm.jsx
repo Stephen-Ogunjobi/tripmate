@@ -25,61 +25,91 @@ export default function TripForm({ onTripCreate, destination }) {
   const { isLoading, data: cities, error } = useCities(locationValue);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 max-w-2xl mx-auto"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {/* Trip Name */}
       <div className="form-group">
         <label
           htmlFor="tripName"
-          className="block font-worksans text-sm font-semibold text-gray-700 mb-2"
+          className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
         >
+          <svg
+            className="w-4 h-4 text-blue-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
           Trip Name
         </label>
-        {errors.tripName && (
-          <p className="text-red-500 text-sm">{errors.tripName.message}</p>
-        )}
         <input
           type="text"
           id="tripName"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-worksans text-gray-800 bg-white focus:border-secondary focus:ring-0 focus:outline-none transition-colors duration-200 placeholder-gray-400"
+          className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200 placeholder-gray-400"
           placeholder="e.g., Weekend Getaway to Paris"
           {...register("tripName", {
-            required: "This field is required",
+            required: "Trip name is required",
           })}
         />
+        {errors.tripName && (
+          <p className="text-red-500 text-sm mt-1">{errors.tripName.message}</p>
+        )}
       </div>
 
       {/* Location */}
       <div className="form-group">
         <label
           htmlFor="location"
-          className="block font-worksans text-sm font-semibold text-gray-700 mb-2"
+          className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
         >
+          <svg
+            className="w-4 h-4 text-blue-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
           Destination
         </label>
-        {errors.location && (
-          <p className="text-red-500 text-sm">{errors.location.message}</p>
-        )}
         <div className="relative">
           <input
             type="text"
             id="location"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-worksans text-gray-800 bg-white focus:border-secondary focus:ring-0 focus:outline-none transition-colors duration-200 placeholder-gray-400"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200 placeholder-gray-400"
             placeholder="e.g., Paris, France"
             {...register("location", {
-              required: "This field is required",
+              required: "Destination is required",
             })}
           />
 
           {/* Loading indicator */}
           {isLoading && locationValue && (
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-secondary"></div>
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
             </div>
           )}
         </div>
+
+        {errors.location && (
+          <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>
+        )}
 
         {/* Error display */}
         {error && (
@@ -90,11 +120,11 @@ export default function TripForm({ onTripCreate, destination }) {
 
         {/* Cities suggestions */}
         {cities?.data && cities.data.length > 0 && locationValue && (
-          <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+          <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto z-10 relative">
             {cities.data.slice(0, 5).map((city) => (
               <div
                 key={city.id}
-                className="px-3 py-2 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                className="px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-150"
                 onClick={() => {
                   setValue("location", `${city.name}, ${city.country}`, {
                     shouldValidate: true,
@@ -111,47 +141,77 @@ export default function TripForm({ onTripCreate, destination }) {
       </div>
 
       {/* Date Range */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Start Date */}
         <div className="form-group">
           <label
             htmlFor="startDate"
-            className="block font-worksans text-sm font-semibold text-gray-700 mb-2"
+            className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
           >
+            <svg
+              className="w-4 h-4 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3a4 4 0 118 0v4m-4 8a4 4 0 11-8 0V7a4 4 0 118 0v4z"
+              />
+            </svg>
             Start Date
           </label>
-          {errors.startDate && (
-            <p className="text-red-500 text-sm">{errors.startDate.message}</p>
-          )}
           <input
             type="date"
             id="startDate"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-worksans text-gray-800 bg-white focus:border-secondary focus:ring-0 focus:outline-none transition-colors duration-200"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200"
             {...register("startDate", {
-              required: "This field is required",
+              required: "Start date is required",
             })}
           />
+          {errors.startDate && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.startDate.message}
+            </p>
+          )}
         </div>
 
         {/* End Date */}
         <div className="form-group">
           <label
             htmlFor="endDate"
-            className="block font-worksans text-sm font-semibold text-gray-700 mb-2"
+            className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
           >
+            <svg
+              className="w-4 h-4 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3a4 4 0 118 0v4m-4 8a4 4 0 11-8 0V7a4 4 0 118 0v4z"
+              />
+            </svg>
             End Date
           </label>
-          {errors.endDate && (
-            <p className="text-red-500 text-sm">{errors.endDate.message}</p>
-          )}
           <input
             type="date"
             id="endDate"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl font-worksans text-gray-800 bg-white focus:border-secondary focus:ring-0 focus:outline-none transition-colors duration-200"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200"
             {...register("endDate", {
-              required: "This field is required",
+              required: "End date is required",
             })}
           />
+          {errors.endDate && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.endDate.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -159,7 +219,7 @@ export default function TripForm({ onTripCreate, destination }) {
       <div className="pt-4">
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-primary to-secondary text-white font-worksans font-bold py-4 px-8 rounded-xl border-none cursor-pointer hover:from-secondary hover:to-primary transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-200"
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-worksans font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-200 shadow-lg hover:shadow-xl"
         >
           Create Trip Plan
         </button>

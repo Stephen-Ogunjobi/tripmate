@@ -111,7 +111,7 @@ export default function FeaturedHighlights() {
 
     return (
       <div className="text-center group">
-        <div className="font-[var(--font-hero-display)] text-2xl sm:text-3xl font-bold text-primary mb-1 group-hover:scale-105 transition-transform duration-300">
+        <div className="font-[var(--font-hero-display)] text-2xl sm:text-3xl  text-primary mb-1 group-hover:scale-105 transition-transform duration-300">
           {stat.decimal
             ? count.toFixed(1)
             : stat.divider
@@ -157,7 +157,7 @@ export default function FeaturedHighlights() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="font-[var(--font-hero-display)] text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-4">
+          <h2 className="font-[var(--font-hero-display)] text-3xl sm:text-4xl lg:text-5xl  text-primary mb-4">
             Featured Highlights
           </h2>
           <p className="font-[var(--font-modern)] text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -192,10 +192,10 @@ export default function FeaturedHighlights() {
 
                   {/* Title and Subtitle */}
                   <div className="mb-3">
-                    <h3 className="font-[var(--font-hero-display)] text-xl font-bold text-primary mb-1">
+                    <h3 className="font-[var(--font-hero-display)] text-xl  text-primary mb-1">
                       {feature.title}
                     </h3>
-                    <p className="font-[var(--font-modern)] text-xs font-semibold text-secondary uppercase tracking-wide">
+                    <p className="font-[var(--font-modern)] text-xs  text-secondary uppercase tracking-wide">
                       {feature.subtitle}
                     </p>
                   </div>
@@ -226,7 +226,7 @@ export default function FeaturedHighlights() {
 
                   {/* CTA Button */}
                   <button
-                    className={`w-full bg-gradient-to-r ${feature.gradient} text-white font-[var(--font-modern)] font-semibold py-2.5 px-4 rounded-xl border-none cursor-pointer flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 hover:shadow-lg text-sm`}
+                    className={`w-full bg-gradient-to-r ${feature.gradient} text-white font-[var(--font-modern)] py-2.5 px-4 rounded-xl border-none cursor-pointer flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 hover:shadow-lg text-sm`}
                   >
                     Learn More
                     <FaArrowRight className="text-xs" />

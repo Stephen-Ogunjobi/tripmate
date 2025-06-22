@@ -10,43 +10,67 @@ export default function TripPlanner() {
   const [newTrip, setNewTrip] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Header Section */}
-      <div className="max-w-4xl mx-auto text-center mb-12">
-        <h1 className="font-primary text-4xl sm:text-5xl font-bold text-primary mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Trip Planner
-        </h1>
-        <p className="font-worksans text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Create your perfect trip with our intelligent planning tools. Let's
-          make your travel dreams come true!
-        </p>
+    <div className="mt-14 bg-background">
+      {/* Header */}
+      <div className="bg-background backdrop-blur-sm text-center py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1
+            className="font-primary text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4 tracking-tight leading-tight"
+            style={{ textShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+          >
+            Trip Planner
+          </h1>
+          <p
+            className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed"
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "400",
+              letterSpacing: "0.025em",
+              textShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+            }}
+          >
+            Create your perfect travel experience with our intelligent planning
+            tools and discover amazing destinations around the world
+          </p>
+        </div>
       </div>
 
-      {/* Form Section */}
-      <div>
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-          {/* Form Header */}
-          <div className="bg-gradient-to-r from-primary to-secondary p-8 text-white">
-            <h2 className="font-primary text-2xl sm:text-3xl font-bold mb-2">
-              Trip Details
-            </h2>
-            <p className="font-worksans text-blue-100 opacity-90">
-              Fill in the details below to start planning your adventure
-            </p>
-          </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {newTrip === null ? (
+          /* Trip Form Section */
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              {/* Form Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                <h2 className="font-primary text-xl font-semibold text-white">
+                  Trip Details
+                </h2>
+                <p className="font-worksans text-blue-100 text-sm mt-1">
+                  Fill in your travel preferences to get started
+                </p>
+              </div>
 
-          {/* Form Content */}
-          <div className="p-8">
-            {newTrip === null ? (
-              <TripForm onTripCreate={setNewTrip} destination={destination} />
-            ) : (
-              <TripEditDetails
-                trip={newTrip}
-                onEditTrip={() => setNewTrip(null)}
-              />
-            )}
+              {/* Form Content */}
+              <div className="p-6">
+                <TripForm onTripCreate={setNewTrip} destination={destination} />
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Trip Details Section */
+          <div className="space-y-6">
+            {/* Trip Details Component */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              <div className="p-6">
+                <TripEditDetails
+                  trip={newTrip}
+                  onEditTrip={() => setNewTrip(null)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
   FaPlane,
   FaHotel,
   FaListUl,
+  FaRocket,
 } from "react-icons/fa";
 import { generateTripPDF } from "../utils/pdfGenerator";
 import { toast } from "react-toastify";
@@ -64,33 +65,39 @@ export default function MyTrips() {
 
   if (savedTrips.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6">
-        <div className="max-w-6xl mx-auto">
+      <div className="mt-12 bg-background min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="font-primary text-4xl font-bold text-primary mb-4">
+          <div className="text-center mb-8">
+            <h1 className="font-primary text-5xl sm:text-6xl font-black text-primary mb-3 tracking-tight">
               My Trips
             </h1>
-            <p className="font-worksans text-gray-600 text-lg">
+            <p className="font-worksans text-gray-600 text-lg font-medium">
               Your saved travel plans and itineraries
             </p>
           </div>
 
           {/* Empty State */}
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <FaPlane className="text-6xl text-gray-300 mx-auto mb-6" />
-            <h2 className="font-primary text-2xl font-bold text-gray-800 mb-4">
+          <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-8 text-center max-w-md mx-auto">
+            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <FaPlane className="text-3xl text-secondary" />
+            </div>
+            <h2 className="font-primary font-bold text-2xl text-primary mb-3">
               No Saved Trips Yet
             </h2>
-            <p className="font-worksans text-gray-600 mb-8 max-w-md mx-auto">
+            <p className="font-worksans text-gray-600 mb-6 leading-relaxed">
               Start planning your adventures! Create and save your first trip to
               see it here.
             </p>
             <button
               onClick={() => (window.location.href = "/trip-planner")}
-              className="bg-gradient-to-r from-primary to-secondary text-white font-worksans font-bold py-3 px-8 rounded-xl border-none cursor-pointer hover:from-secondary hover:to-primary transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="group relative bg-primary text-white font-worksans font-bold py-3 px-6 rounded-xl overflow-hidden transition-all duration-300 hover:bg-secondary hover:scale-105 hover:shadow-xl active:scale-95"
             >
-              Plan Your First Trip
+              <div className="absolute inset-0 bg-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <span className="relative flex items-center gap-2">
+                <FaRocket className="text-lg group-hover:animate-bounce" />
+                Plan Your First Trip
+              </span>
             </button>
           </div>
         </div>
@@ -99,48 +106,51 @@ export default function MyTrips() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="mt-12 bg-background min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="font-primary text-4xl font-bold text-primary mb-4">
+        <div className="text-center mb-8">
+          <h1 className="font-primary text-4xl sm:text-5xl font-black text-primary mb-3 tracking-tight">
             My Trips
           </h1>
-          <p className="font-worksans text-gray-600 text-lg">
+          <p className="font-worksans text-gray-600 text-lg font-medium">
             You have {savedTrips.length} saved{" "}
             {savedTrips.length === 1 ? "trip" : "trips"}
           </p>
         </div>
 
         {/* Trips Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-8">
           {savedTrips.map((trip, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              className="group bg-white/90 backdrop-blur-lg rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1"
             >
               {/* Trip Header */}
-              <div className="bg-gradient-to-r from-primary to-secondary p-6 text-white">
-                <h3 className="font-primary text-xl font-bold mb-2 truncate">
-                  {trip.tripDetails.name}
-                </h3>
-                <div className="flex items-center gap-2 text-blue-100">
-                  <FaMapMarkerAlt className="text-sm" />
-                  <span className="font-worksans text-sm">
-                    {trip.tripDetails.destination}
-                  </span>
+              <div className="bg-primary p-4 text-white relative overflow-hidden group-hover:bg-secondary transition-colors duration-300">
+                <div className="relative">
+                  <h3 className="font-primary font-bold text-lg mb-1 truncate">
+                    {trip.tripDetails.name.charAt(0).toUpperCase() +
+                      trip.tripDetails.name.slice(1)}
+                  </h3>
+                  <div className="flex items-center gap-2 text-gray-200">
+                    <FaMapMarkerAlt className="text-sm" />
+                    <span className="font-worksans text-sm font-medium">
+                      {trip.tripDetails.destination}
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Trip Details */}
-              <div className="p-6">
+              <div className="p-4 space-y-3">
                 {/* Dates */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <FaCalendarAlt className="text-blue-600 text-sm" />
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <FaCalendarAlt className="text-secondary text-sm" />
                   </div>
-                  <div>
-                    <p className="font-worksans text-sm text-gray-600">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-worksans text-sm font-semibold text-gray-700 truncate">
                       {formatDate(trip.tripDetails.startDate)} -{" "}
                       {formatDate(trip.tripDetails.endDate)}
                     </p>
@@ -156,15 +166,15 @@ export default function MyTrips() {
 
                 {/* Accommodation */}
                 {trip.accommodation && (
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-orange-50 rounded-full flex items-center justify-center flex-shrink-0">
                       <FaHotel className="text-orange-600 text-sm" />
                     </div>
-                    <div>
-                      <p className="font-worksans text-sm font-medium text-gray-800 truncate">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-worksans text-sm font-semibold text-gray-700 truncate">
                         {trip.accommodation.name}
                       </p>
-                      <p className="font-worksans text-xs text-gray-500">
+                      <p className="font-worksans text-xs text-gray-500 truncate">
                         {trip.accommodation.neighborhood || "Hotel booked"}
                       </p>
                     </div>
@@ -172,12 +182,12 @@ export default function MyTrips() {
                 )}
 
                 {/* Activities Summary */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0">
                     <FaListUl className="text-green-600 text-sm" />
                   </div>
-                  <div>
-                    <p className="font-worksans text-sm font-medium text-gray-800">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-worksans text-sm font-semibold text-gray-700">
                       {getTotalActivities(trip.itinerary)} Activities Planned
                     </p>
                     <p className="font-worksans text-xs text-gray-500">
@@ -187,10 +197,10 @@ export default function MyTrips() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-2">
+                <div className="flex gap-2 pt-2">
                   <button
                     onClick={() => handleDownloadTrip(trip)}
-                    className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-worksans font-medium py-2 px-3 rounded-lg border-none cursor-pointer hover:from-emerald-600 hover:to-green-500 transition-all duration-200 flex items-center justify-center gap-2 text-sm transform hover:-translate-y-0.5 shadow-sm hover:shadow-md"
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 font-worksans font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm hover:shadow-sm border border-gray-200 hover:border-gray-300"
                     title="Download PDF"
                   >
                     <FaDownload className="text-xs" />
@@ -198,7 +208,7 @@ export default function MyTrips() {
                   </button>
                   <button
                     onClick={() => handleDeleteTrip(index)}
-                    className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 text-white font-worksans font-medium py-2 px-3 rounded-lg border-none cursor-pointer hover:from-pink-600 hover:to-red-500 transition-all duration-200 flex items-center justify-center gap-2 text-sm transform hover:-translate-y-0.5 shadow-sm hover:shadow-md"
+                    className="flex-1 bg-gray-100 hover:bg-red-50 text-gray-500 hover:text-red-600 font-worksans font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm hover:shadow-sm border border-gray-200 hover:border-red-200"
                     title="Delete Trip"
                   >
                     <FaTrash className="text-xs" />
@@ -208,7 +218,7 @@ export default function MyTrips() {
               </div>
 
               {/* Generation Info */}
-              <div className="px-6 pb-4">
+              <div className="px-4 pb-3">
                 <p className="font-worksans text-xs text-gray-400 text-center">
                   Saved on {trip.generatedOn}
                 </p>
@@ -217,14 +227,31 @@ export default function MyTrips() {
           ))}
         </div>
 
-        {/* Action Bar */}
-        <div className="mt-12 text-center">
+        {/* Animated Action Bar */}
+        <div className="text-center">
           <button
             onClick={() => (window.location.href = "/trip-planner")}
-            className="bg-gradient-to-r from-primary to-secondary text-white font-worksans font-bold py-3 px-8 rounded-xl border-none cursor-pointer hover:from-secondary hover:to-primary transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-3 mx-auto"
+            className="group relative inline-flex items-center gap-3 bg-primary text-white font-worksans font-bold py-4 px-8 rounded-2xl overflow-hidden transition-all duration-500 hover:bg-secondary hover:scale-110 hover:shadow-2xl active:scale-95 animate-pulse hover:animate-none"
           >
-            <FaPlane className="text-lg" />
-            Plan Another Trip
+            {/* Animated background */}
+            <div className="absolute inset-0 bg-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            {/* Floating particles effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute top-1/2 left-1/4 w-1 h-1 bg-white rounded-full animate-ping animation-delay-100"></div>
+              <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full animate-ping animation-delay-300"></div>
+              <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-white rounded-full animate-ping animation-delay-500"></div>
+            </div>
+
+            {/* Button content */}
+            <div className="relative flex items-center gap-3">
+              <FaRocket className="text-xl group-hover:animate-bounce transition-transform duration-300 group-hover:rotate-12" />
+              <span className="text-lg tracking-wide">Plan Another Trip</span>
+              <div className="w-2 h-2 bg-white rounded-full group-hover:animate-ping"></div>
+            </div>
+
+            {/* Shine effect */}
+            <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
           </button>
         </div>
       </div>

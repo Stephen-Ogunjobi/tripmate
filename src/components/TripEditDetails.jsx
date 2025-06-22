@@ -208,298 +208,247 @@ export default function TripEditDetails({ trip, onEditTrip }) {
   };
 
   return (
-    <div className="space-y-4 max-w-6xl mx-auto">
-      {/* Compact Success Banner */}
-      <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-4 text-white">
-        <div className="flex items-center gap-4">
-          <FaCheckCircle className="text-2xl flex-shrink-0" />
-          <div className="flex-1">
-            <h3 className="font-primary text-lg font-bold mb-1">
-              Trip Created Successfully!
-            </h3>
-            <p className="font-worksans text-green-100 text-sm opacity-90">
-              Ready to plan your itinerary
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-3 sm:p-4 lg:p-6">
+      <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
+        {/* Trip Header - Compact Modern Design */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-4 sm:p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* Trip Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent truncate">
+                    {tripName.charAt(0).toUpperCase() + tripName.slice(1)}
+                  </h1>
+                  <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-slate-600">
+                    <div className="flex items-center gap-1">
+                      <FaMapMarkerAlt className="text-blue-500" />
+                      <span className="font-medium">{location}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <FaCalendarAlt className="text-emerald-500" />
+                      <span>
+                        {tripDays.length}{" "}
+                        {tripDays.length === 1 ? "day" : "days"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons - Mobile Responsive */}
+                <div className="flex gap-2 ml-4">
+                  <button
+                    onClick={onEditTrip}
+                    className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all duration-200 text-sm font-medium"
+                  >
+                    <FaArrowLeft className="text-xs" />
+                    <span className="hidden sm:inline">Back</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <FaEdit className="text-xs" />
+                    <span className="hidden sm:inline">Edit</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Date Range */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-slate-100 to-slate-200 rounded-full text-sm font-medium text-slate-700">
+                <span>
+                  {new Date(startDate).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+                <span className="text-slate-400">→</span>
+                <span>
+                  {new Date(endDate).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Trip Details Header - Full Width */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          {/* Trip Name */}
-          <div className="lg:col-span-4">
-            <h2 className="font-primary text-2xl font-bold text-primary mb-1">
-              {tripName}
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-          </div>
-
-          {/* Trip Details */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <FaMapMarkerAlt className="text-white text-sm" />
-              </div>
-              <div>
-                <span className="font-worksans text-gray-500 text-xs font-medium">
-                  Destination
-                </span>
-                <p className="font-worksans text-base font-bold text-gray-800">
-                  {location}
+        {/* Accommodation Section - Compact */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-4 sm:p-6">
+          {!selectedHotel ? (
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-slate-800 mb-1">
+                  Accommodation
+                </h2>
+                <p className="text-sm text-slate-600">
+                  Find hotels in {location}
                 </p>
               </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center">
-                <FaCalendarAlt className="text-white text-sm" />
-              </div>
-              <div>
-                <span className="font-worksans text-gray-500 text-xs font-medium">
-                  Duration
-                </span>
-                <p className="font-worksans text-base font-bold text-gray-800">
-                  {tripDays.length} {tripDays.length === 1 ? "day" : "days"}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="lg:col-span-2 flex gap-2">
-            <button
-              onClick={onEditTrip}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-worksans font-medium py-2 px-4 rounded-lg border-none cursor-pointer transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
-            >
-              <FaArrowLeft className="text-xs" />
-              Back
-            </button>
-            <button className="flex-1 bg-gradient-to-r from-secondary to-primary text-white font-worksans font-medium py-2 px-4 rounded-lg border-none cursor-pointer hover:from-primary hover:to-secondary transition-all duration-200 flex items-center justify-center gap-2 text-sm">
-              <FaEdit className="text-xs" />
-              Edit
-            </button>
-          </div>
-        </div>
-
-        {/* Date Range - Compact */}
-        <div className="mt-4 pt-4 border-t border-gray-100">
-          <p className="font-worksans text-gray-600 text-center text-sm">
-            <span className="font-semibold">
-              {new Date(startDate).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-            {" → "}
-            <span className="font-semibold">
-              {new Date(endDate).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      {/* Accommodation Section */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-        {!selectedHotel ? (
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <h3 className="font-primary text-lg font-bold text-primary mb-1">
-                Find Accommodation
-              </h3>
-              <p className="font-worksans text-gray-600 text-sm">
-                Search for nearby hotels and accommodations in {location}
-              </p>
-            </div>
-            <button
-              onClick={handleSearchHotels}
-              disabled={isLoadingRegions}
-              className="bg-gradient-to-r from-orange-500 to-red-600 text-white font-worksans font-bold py-3 px-6 rounded-xl border-none cursor-pointer hover:from-red-600 hover:to-orange-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-orange-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              <FaMapMarkerAlt className="text-sm" />
-              {isLoadingRegions ? "Loading..." : "Search Hotels"}
-            </button>
-          </div>
-        ) : (
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-primary text-lg font-bold text-primary">
-                Selected Accommodation
-              </h3>
               <button
-                onClick={() => setSelectedHotel(null)}
-                className="text-gray-500 hover:text-gray-700 font-worksans text-sm"
+                onClick={handleSearchHotels}
+                disabled={isLoadingRegions}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none text-sm"
               >
-                Change Hotel
+                <FaMapMarkerAlt />
+                {isLoadingRegions ? "Loading..." : "Search Hotels"}
               </button>
             </div>
+          ) : (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-slate-800">
+                  Selected Hotel
+                </h2>
+                <button
+                  onClick={() => setSelectedHotel(null)}
+                  className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
+                >
+                  Change
+                </button>
+              </div>
 
-            {/* Selected Hotel Display */}
-            <div className="border border-gray-200 rounded-xl overflow-hidden">
-              <div className="flex">
-                {/* Hotel Image */}
-                <div className="w-32 h-32 flex-shrink-0">
-                  {selectedHotel.propertyImage?.image?.url ? (
-                    <img
-                      src={selectedHotel.propertyImage.image.url}
-                      alt={selectedHotel.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                      <FaMapMarkerAlt className="text-gray-400 text-2xl" />
-                    </div>
-                  )}
-                </div>
+              <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl p-4 border border-slate-200">
+                <div className="flex gap-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    {selectedHotel.propertyImage?.image?.url ? (
+                      <img
+                        src={selectedHotel.propertyImage.image.url}
+                        alt={selectedHotel.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                        <FaMapMarkerAlt className="text-slate-400" />
+                      </div>
+                    )}
+                  </div>
 
-                {/* Hotel Details */}
-                <div className="flex-1 p-4">
-                  <h4 className="font-primary text-lg font-bold text-gray-900 mb-1">
-                    {selectedHotel.name}
-                  </h4>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-slate-800 truncate mb-1">
+                      {selectedHotel.name}
+                    </h3>
+                    {selectedHotel.neighborhood?.name && (
+                      <p className="text-sm text-slate-600 mb-2 flex items-center gap-1">
+                        <FaMapMarkerAlt className="text-xs" />
+                        {selectedHotel.neighborhood.name}
+                      </p>
+                    )}
 
-                  {selectedHotel.neighborhood?.name && (
-                    <p className="font-worksans text-sm text-gray-600 mb-2 flex items-center gap-1">
-                      <FaMapMarkerAlt className="text-xs" />
-                      {selectedHotel.neighborhood.name}
-                    </p>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    {selectedHotel.reviews?.score && (
-                      <div className="flex items-center gap-1">
-                        <span className="font-worksans text-sm text-gray-600">
+                    <div className="flex items-center justify-between">
+                      {selectedHotel.reviews?.score && (
+                        <span className="text-sm text-slate-600">
                           {selectedHotel.reviews.score}/10 (
-                          {selectedHotel.reviews.total} reviews)
+                          {selectedHotel.reviews.total})
                         </span>
-                      </div>
-                    )}
-
-                    {selectedHotel.price?.lead?.formatted && (
-                      <div className="text-right">
-                        <span className="font-primary text-xl font-bold text-orange-600">
-                          {selectedHotel.price.lead.formatted}
+                      )}
+                      {selectedHotel.price?.lead?.formatted && (
+                        <span className="font-bold text-orange-600">
+                          {selectedHotel.price.lead.formatted}/night
                         </span>
-                        <span className="font-worksans text-sm text-gray-500 ml-1">
-                          /night
-                        </span>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Itinerary Planning Section - Full Width */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
-          <h3 className="font-primary text-lg font-bold text-primary">
-            Plan Your Itinerary
-          </h3>
-          <p className="font-worksans text-gray-600 text-sm">
-            Add activities for each day of your trip
-          </p>
+          )}
         </div>
 
-        {/* Days Grid - Full Width, More Columns */}
-        <div className="p-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-            {tripDays.map((day) => (
-              <div
-                key={day.dayNumber}
-                className="bg-gray-50 rounded-lg p-4 border-2 border-gray-200 hover:border-secondary transition-colors duration-200"
-              >
-                {/* Day Header - Compact */}
-                <div className="text-center mb-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="font-worksans font-bold text-white text-sm">
-                      {day.dayNumber}
-                    </span>
-                  </div>
-                  <h4 className="font-primary text-sm font-bold text-primary mb-1">
-                    Day {day.dayNumber}
-                  </h4>
-                  <p className="font-worksans text-xs text-gray-600">
-                    {day.date.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
+        {/* Itinerary Section - Ultra Compact Grid */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-100 to-slate-200 px-4 sm:px-6 py-3 border-b border-slate-200">
+            <h2 className="text-lg font-bold text-slate-800">Itinerary</h2>
+            <p className="text-sm text-slate-600">
+              Plan activities for each day
+            </p>
+          </div>
 
-                {/* Activities Display - Compact */}
-                <div className="min-h-[60px] mb-3">
-                  {day.activities.length === 0 ? (
-                    <div className="flex items-center justify-center h-16 border-2 border-dashed border-gray-300 rounded-lg">
-                      <p className="font-worksans text-gray-400 text-xs">
-                        No activities
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-1 max-h-32 overflow-y-auto">
-                      {day.activities.map((activity, index) => (
-                        <div
-                          key={index}
-                          className="bg-white p-2 rounded border border-gray-200 shadow-sm"
-                        >
-                          <p className="font-worksans text-xs font-medium text-gray-800 truncate">
-                            {activity.name}
-                          </p>
-                          <p className="font-worksans text-xs text-gray-500 truncate">
-                            {activity.category}
-                          </p>
-                          {activity.distance && (
-                            <p className="font-worksans text-xs text-gray-400">
-                              {activity.distance}
-                            </p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Add Activity Button - Compact */}
-                <button
-                  onClick={() => handleAddActivity(day.dayNumber)}
-                  className="w-full bg-gradient-to-r from-secondary to-primary text-white font-worksans font-medium py-2 px-3 rounded-lg border-none cursor-pointer hover:from-primary hover:to-secondary transition-all duration-200 flex items-center justify-center gap-2 text-xs transform hover:-translate-y-0.5 shadow-sm hover:shadow-md"
+          <div className="p-4 sm:p-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
+              {tripDays.map((day) => (
+                <div
+                  key={day.dayNumber}
+                  className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-3 border-2 border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all duration-200 group"
                 >
-                  <FaPlus className="text-xs" />
-                  ADD ACTIVITY
-                </button>
-              </div>
-            ))}
-          </div>
+                  {/* Day Header */}
+                  <div className="text-center mb-3">
+                    <div className="w-7 h-7 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform duration-200">
+                      <span className="text-white text-xs font-bold">
+                        {day.dayNumber}
+                      </span>
+                    </div>
+                    <p className="text-xs font-bold text-slate-700 mb-1">
+                      Day {day.dayNumber}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {day.date.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
 
-          {/* Action Buttons */}
-          <div className="mt-6 pt-6 border-t border-gray-200 flex justify-center gap-4">
-            <button
-              onClick={handleSaveTrip}
-              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-worksans font-bold py-3 px-8 rounded-xl border-none cursor-pointer hover:from-indigo-600 hover:to-blue-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-200 flex items-center gap-3"
-            >
-              <FaCheckCircle className="text-lg" />
-              Save Trip
-            </button>
-            <button
-              onClick={handleDownloadTrip}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-worksans font-bold py-3 px-8 rounded-xl border-none cursor-pointer hover:from-emerald-600 hover:to-green-500 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-200 flex items-center gap-3"
-            >
-              <FaDownload className="text-lg" />
-              Download Trip
-            </button>
+                  {/* Activities */}
+                  <div className="min-h-[50px] mb-3">
+                    {day.activities.length === 0 ? (
+                      <div className="h-12 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center">
+                        <span className="text-xs text-slate-400">
+                          No activities
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="space-y-1 max-h-24 overflow-y-auto">
+                        {day.activities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="bg-white p-2 rounded-lg border border-slate-200 shadow-sm"
+                          >
+                            <p className="text-xs font-medium text-slate-800 truncate">
+                              {activity.name}
+                            </p>
+                            <p className="text-xs text-slate-500 truncate">
+                              {activity.category}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Add Button */}
+                  <button
+                    onClick={() => handleAddActivity(day.dayNumber)}
+                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-2 px-2 rounded-lg text-xs font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  >
+                    <FaPlus className="text-xs" />
+                    ADD
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-3 mt-6 pt-6 border-t border-slate-200">
+              <button
+                onClick={handleSaveTrip}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                <FaCheckCircle />
+                Save Trip
+              </button>
+              <button
+                onClick={handleDownloadTrip}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white rounded-xl font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                <FaDownload />
+                Download PDF
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Hotel Search Modal */}
+      {/* Modals */}
       <HotelModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -512,7 +461,6 @@ export default function TripEditDetails({ trip, onEditTrip }) {
         onSelectHotel={handleSelectHotel}
       />
 
-      {/* Activity Search Modal */}
       <ActivityModal
         isOpen={isActivityModalOpen}
         onClose={handleCloseActivityModal}
