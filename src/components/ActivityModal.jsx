@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useActivities } from "../hooks/useActivities";
 
 export default function ActivityModal({
@@ -10,12 +10,19 @@ export default function ActivityModal({
   destinationName,
 }) {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
   const { isLoading, data, error } = useActivities(
     latitude,
     longitude,
     selectedCategory,
     15
   );
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(true);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -50,35 +57,55 @@ export default function ActivityModal({
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Activities in {destinationName}
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Discover amazing places to visit and things to do
-            </p>
+    <div
+      className={`fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 ${
+        isAnimating ? "animate-fade-in" : "opacity-0"
+      } transition-all duration-300`}
+    >
+      <div
+        className={`bg-white backdrop-blur-lg rounded-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden shadow-2xl border border-gray-200/50 ${
+          isAnimating ? "animate-scale-in" : "scale-95 opacity-0"
+        } transition-all duration-500`}
+      >
+        {/* Modern Header */}
+        <div className="relative bg-gradient-to-r from-primary to-secondary p-6 text-white overflow-hidden">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="relative flex items-center justify-between">
+            <div>
+              <h2 className="font-primary text-2xl font-bold mb-1">
+                Discover {destinationName}
+              </h2>
+              <p className="font-worksans text-white text-base">
+                Find amazing places and experiences
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="w-12 h-12 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full flex items-center justify-center text-white text-2xl font-bold transition-all duration-200 hover:scale-110"
+            >
+              ×
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
-          >
-            ×
-          </button>
+
+          {/* Decorative elements */}
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
         </div>
 
-        {/* Category Filter */}
-        <div className="p-6 border-b bg-gray-50">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Filter by Category:
-          </label>
+        {/* Modern Category Filter */}
+        <div className="p-4 bg-gradient-to-br from-gray-50 to-white border-b border-gray-200/50">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+              <span className="text-white text-xs">🔍</span>
+            </div>
+            <label className="font-worksans font-semibold text-gray-800 text-base">
+              Filter Activities
+            </label>
+          </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 font-worksans text-gray-700 shadow-sm hover:shadow-md"
           >
             {categoryOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -88,87 +115,147 @@ export default function ActivityModal({
           </select>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[60vh]">
+        {/* Modern Content */}
+        <div className="p-4 overflow-y-auto max-h-[50vh] bg-gradient-to-b from-white to-gray-50/50">
           {isLoading && (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-              <span className="ml-3 text-gray-600">Finding activities...</span>
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="relative">
+                <div className="w-12 h-12 border-4 border-primary/20 rounded-full animate-spin border-t-primary"></div>
+                <div className="absolute inset-0 w-12 h-12 border-4 border-transparent rounded-full animate-ping border-t-secondary/50"></div>
+              </div>
+              <span className="mt-3 font-worksans text-gray-700 text-base font-medium">
+                Finding activities...
+              </span>
+              <div className="mt-2 flex gap-1">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                <div
+                  className="w-2 h-2 bg-secondary rounded-full animate-bounce"
+                  style={{ animationDelay: "0.1s" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+              </div>
             </div>
           )}
 
           {error && (
             <div className="text-center py-12">
-              <div className="text-red-600 mb-2">
-                ⚠️ Error loading activities
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">⚠️</span>
               </div>
-              <p className="text-gray-600">{error.message}</p>
+              <h3 className="font-primary text-lg font-bold text-red-600 mb-2">
+                Something went wrong
+              </h3>
+              <p className="font-worksans text-gray-700 text-sm max-w-sm mx-auto">
+                {error.message}
+              </p>
             </div>
           )}
 
           {data?.data && data.data.length === 0 && !isLoading && (
             <div className="text-center py-12">
-              <div className="text-gray-500 mb-2">🔍 No activities found</div>
-              <p className="text-gray-600">
-                Try selecting a different category or location
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">🔍</span>
+              </div>
+              <h3 className="font-primary text-lg font-bold text-gray-700 mb-2">
+                No activities found
+              </h3>
+              <p className="font-worksans text-gray-600 text-sm max-w-sm mx-auto">
+                Try selecting a different category
               </p>
             </div>
           )}
 
           {data?.data && data.data.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {data.data.map((activity) => (
+              {data.data.map((activity, index) => (
                 <div
                   key={activity.fsq_id}
-                  className="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer"
+                  className="group bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg hover:border-primary/30 transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
                   onClick={() => handleActivitySelect(activity)}
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                  }}
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-gray-900 text-lg leading-tight">
+                  {/* Card Header */}
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-primary font-bold text-gray-900 text-lg leading-tight group-hover:text-primary transition-colors duration-300 flex-1 mr-3">
                       {activity.name}
                     </h3>
                     {activity.rating && (
-                      <div className="flex items-center bg-green-100 px-2 py-1 rounded text-sm">
-                        <span className="text-green-800 font-medium">
-                          ⭐ {activity.rating}
-                        </span>
+                      <div className="flex items-center bg-gradient-to-r from-green-400 to-emerald-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                        <span className="mr-1">⭐</span>
+                        <span>{activity.rating}</span>
                       </div>
                     )}
                   </div>
 
+                  {/* Activity Details */}
                   <div className="space-y-2">
                     {activity.categories?.[0]?.name && (
-                      <div className="flex items-center text-sm text-blue-600">
-                        <span className="bg-blue-100 px-2 py-1 rounded text-xs">
+                      <div className="flex items-center">
+                        <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                           {activity.categories[0].name}
                         </span>
                       </div>
                     )}
 
-                    <p className="text-gray-600 text-sm">
-                      📍{" "}
-                      {activity.location?.formatted_address ||
-                        "Address not available"}
-                    </p>
+                    <div className="flex items-start gap-2">
+                      <div className="w-4 h-4 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-red-600 text-xs">📍</span>
+                      </div>
+                      <p className="font-worksans text-gray-700 text-sm leading-relaxed">
+                        {activity.location?.formatted_address ||
+                          "Address not available"}
+                      </p>
+                    </div>
 
                     {activity.distance && (
-                      <p className="text-gray-500 text-sm">
-                        📏 {Math.round((activity.distance / 1000) * 10) / 10}km
-                        away
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-blue-600 text-xs">📏</span>
+                        </div>
+                        <p className="font-worksans text-gray-600 text-sm">
+                          {Math.round((activity.distance / 1000) * 10) / 10}km
+                          away
+                        </p>
+                      </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center text-sm text-gray-500">
+                    {/* Status and Action */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <div className="flex items-center text-sm">
                         {activity.closed_bucket === "VeryLikelyOpen" && (
-                          <span className="text-green-600">🟢 Likely Open</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            <span className="text-green-600 font-medium">
+                              Likely Open
+                            </span>
+                          </div>
                         )}
                         {activity.closed_bucket === "VeryLikelyClosed" && (
-                          <span className="text-red-600">🔴 Likely Closed</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span className="text-red-600 font-medium">
+                              Likely Closed
+                            </span>
+                          </div>
+                        )}
+                        {!activity.closed_bucket && (
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                            <span className="text-gray-500 font-medium">
+                              Status Unknown
+                            </span>
+                          </div>
                         )}
                       </div>
-                      <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors">
-                        Add to Trip
+
+                      <button className="relative bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:from-secondary hover:to-primary transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden group">
+                        <span className="relative z-10">Add to Trip</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
                       </button>
                     </div>
                   </div>
@@ -178,17 +265,25 @@ export default function ActivityModal({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="border-t p-6 bg-gray-50">
+        {/* Modern Footer */}
+        <div className="border-t border-gray-200/50 p-4 bg-gradient-to-r from-gray-50 to-white">
           <div className="flex justify-between items-center">
-            <p className="text-sm text-gray-600">
-              {data?.data?.length || 0} activities found
-            </p>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs font-bold">
+                  {data?.data?.length || 0}
+                </span>
+              </div>
+              <p className="font-worksans font-semibold text-gray-800 text-sm">
+                {data?.data?.length === 1 ? "Activity" : "Activities"} found
+              </p>
+            </div>
             <button
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+              className="group relative px-4 py-2 bg-white border-2 border-gray-200 rounded-lg text-gray-700 hover:border-primary hover:text-primary transition-all duration-300 font-worksans font-medium shadow-sm hover:shadow-md overflow-hidden text-sm"
             >
-              Close
+              <span className="relative z-10">Close</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
         </div>

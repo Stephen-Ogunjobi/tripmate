@@ -14,11 +14,13 @@ import { toast } from "react-toastify";
 
 export default function MyTrips() {
   const [savedTrips, setSavedTrips] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load saved trips from localStorage
+  // Load saved trips from localStorage and trigger animations
   useEffect(() => {
     const trips = JSON.parse(localStorage.getItem("savedTrips") || "[]");
     setSavedTrips(trips);
+    setIsLoaded(true);
   }, []);
 
   // Delete a trip
@@ -65,20 +67,36 @@ export default function MyTrips() {
 
   if (savedTrips.length === 0) {
     return (
-      <div className="mt-12 bg-background min-h-screen">
+      <div
+        className={`mt-12 bg-background min-h-screen ${
+          isLoaded ? "animate-fade-in" : "opacity-0"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="font-primary text-5xl sm:text-6xl font-black text-primary mb-3 tracking-tight">
+            <h1
+              className={`font-primary text-5xl sm:text-6xl font-black text-primary mb-3 tracking-tight ${
+                isLoaded ? "animate-slide-up" : "translate-y-8 opacity-0"
+              } transition-all duration-1000 delay-300`}
+            >
               My Trips
             </h1>
-            <p className="font-worksans text-gray-600 text-lg font-medium">
+            <p
+              className={`font-worksans text-gray-600 text-lg font-medium ${
+                isLoaded ? "animate-slide-up" : "translate-y-8 opacity-0"
+              } transition-all duration-1000 delay-500`}
+            >
               Your saved travel plans and itineraries
             </p>
           </div>
 
           {/* Empty State */}
-          <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-8 text-center max-w-md mx-auto">
+          <div
+            className={`bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-8 text-center max-w-md mx-auto hover:shadow-2xl transition-shadow duration-300 ${
+              isLoaded ? "animate-slide-up" : "translate-y-12 opacity-0"
+            } transition-all duration-1000 delay-700`}
+          >
             <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <FaPlane className="text-3xl text-secondary" />
             </div>
@@ -106,21 +124,37 @@ export default function MyTrips() {
   }
 
   return (
-    <div className="mt-12 bg-background min-h-screen">
+    <div
+      className={`mt-12 bg-background min-h-screen ${
+        isLoaded ? "animate-fade-in" : "opacity-0"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="font-primary text-4xl sm:text-5xl font-black text-primary mb-3 tracking-tight">
+          <h1
+            className={`font-primary text-4xl sm:text-5xl font-black text-primary mb-3 tracking-tight ${
+              isLoaded ? "animate-slide-up" : "translate-y-8 opacity-0"
+            } transition-all duration-1000 delay-300`}
+          >
             My Trips
           </h1>
-          <p className="font-worksans text-gray-600 text-lg font-medium">
+          <p
+            className={`font-worksans text-gray-600 text-lg font-medium ${
+              isLoaded ? "animate-slide-up" : "translate-y-8 opacity-0"
+            } transition-all duration-1000 delay-500`}
+          >
             You have {savedTrips.length} saved{" "}
             {savedTrips.length === 1 ? "trip" : "trips"}
           </p>
         </div>
 
         {/* Trips Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-8">
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-8 ${
+            isLoaded ? "animate-slide-up" : "translate-y-12 opacity-0"
+          } transition-all duration-1000 delay-700`}
+        >
           {savedTrips.map((trip, index) => (
             <div
               key={index}
@@ -228,7 +262,11 @@ export default function MyTrips() {
         </div>
 
         {/* Animated Action Bar */}
-        <div className="text-center">
+        <div
+          className={`text-center ${
+            isLoaded ? "animate-slide-up" : "translate-y-12 opacity-0"
+          } transition-all duration-1000 delay-900`}
+        >
           <button
             onClick={() => (window.location.href = "/trip-planner")}
             className="group relative inline-flex items-center gap-3 bg-primary text-white font-worksans font-bold py-4 px-8 rounded-2xl overflow-hidden transition-all duration-500 hover:bg-secondary hover:scale-110 hover:shadow-2xl active:scale-95 animate-pulse hover:animate-none"

@@ -30,10 +30,10 @@ export default function TripForm({ onTripCreate, destination }) {
       <div className="form-group">
         <label
           htmlFor="tripName"
-          className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
+          className="flex items-center gap-2 font-worksans text-sm font-medium text-primary mb-2"
         >
           <svg
-            className="w-4 h-4 text-blue-500"
+            className="w-4 h-4 text-secondary"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ export default function TripForm({ onTripCreate, destination }) {
         <input
           type="text"
           id="tripName"
-          className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200 placeholder-gray-400"
+          className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-primary bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all duration-200 placeholder-gray-400"
           placeholder="e.g., Weekend Getaway to Paris"
           {...register("tripName", {
             required: "Trip name is required",
@@ -65,10 +65,10 @@ export default function TripForm({ onTripCreate, destination }) {
       <div className="form-group">
         <label
           htmlFor="location"
-          className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
+          className="flex items-center gap-2 font-worksans text-sm font-medium text-primary mb-2"
         >
           <svg
-            className="w-4 h-4 text-blue-500"
+            className="w-4 h-4 text-secondary"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -92,7 +92,7 @@ export default function TripForm({ onTripCreate, destination }) {
           <input
             type="text"
             id="location"
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200 placeholder-gray-400"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-primary bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all duration-200 placeholder-gray-400"
             placeholder="e.g., Paris, France"
             {...register("location", {
               required: "Destination is required",
@@ -102,7 +102,7 @@ export default function TripForm({ onTripCreate, destination }) {
           {/* Loading indicator */}
           {isLoading && locationValue && (
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-secondary border-t-transparent"></div>
             </div>
           )}
         </div>
@@ -132,7 +132,7 @@ export default function TripForm({ onTripCreate, destination }) {
                   });
                 }}
               >
-                <div className="font-medium text-gray-900">{city.name}</div>
+                <div className="font-medium text-primary">{city.name}</div>
                 <div className="text-sm text-gray-500">{city.country}</div>
               </div>
             ))}
@@ -146,10 +146,10 @@ export default function TripForm({ onTripCreate, destination }) {
         <div className="form-group">
           <label
             htmlFor="startDate"
-            className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
+            className="flex items-center gap-2 font-worksans text-sm font-medium text-primary mb-2"
           >
             <svg
-              className="w-4 h-4 text-blue-500"
+              className="w-4 h-4 text-secondary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -166,7 +166,7 @@ export default function TripForm({ onTripCreate, destination }) {
           <input
             type="date"
             id="startDate"
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-primary bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all duration-200"
             {...register("startDate", {
               required: "Start date is required",
             })}
@@ -182,10 +182,10 @@ export default function TripForm({ onTripCreate, destination }) {
         <div className="form-group">
           <label
             htmlFor="endDate"
-            className="flex items-center gap-2 font-worksans text-sm font-medium text-gray-700 mb-2"
+            className="flex items-center gap-2 font-worksans text-sm font-medium text-primary mb-2"
           >
             <svg
-              className="w-4 h-4 text-blue-500"
+              className="w-4 h-4 text-secondary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -202,7 +202,7 @@ export default function TripForm({ onTripCreate, destination }) {
           <input
             type="date"
             id="endDate"
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-gray-800 bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all duration-200"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg font-worksans text-primary bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all duration-200"
             {...register("endDate", {
               required: "End date is required",
             })}
@@ -219,9 +219,20 @@ export default function TripForm({ onTripCreate, destination }) {
       <div className="pt-4">
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-worksans font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-200 shadow-lg hover:shadow-xl"
+          className="w-full bg-secondary hover:bg-primary text-white font-worksans font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-lg hover:shadow-xl relative overflow-hidden group"
+          style={{
+            background:
+              "linear-gradient(135deg, var(--color-secondary), var(--color-primary))",
+          }}
         >
-          Create Trip Plan
+          <span className="relative z-10">Create Trip Plan</span>
+          <div
+            className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
+            }}
+          />
         </button>
       </div>
     </form>
