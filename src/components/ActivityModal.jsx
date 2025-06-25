@@ -67,7 +67,6 @@ export default function ActivityModal({
           isAnimating ? "animate-scale-in" : "scale-95 opacity-0"
         } transition-all duration-500`}
       >
-        {/* Modern Header */}
         <div className="relative bg-gradient-to-r from-primary to-secondary p-6 text-white overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative flex items-center justify-between">

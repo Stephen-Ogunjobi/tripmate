@@ -23,13 +23,10 @@ export default function PopularItinerary() {
             );
             const isMobile = window.innerWidth <= 640;
 
-            // On mobile: all cards come from left, one after another
-            // On desktop: alternate left/right based on position
             const shouldAnimateFromRight = isMobile
               ? false
               : cardIndex % 2 === 1;
 
-            // Stagger animation timing
             const delay = cardIndex * 150;
 
             setTimeout(() => {

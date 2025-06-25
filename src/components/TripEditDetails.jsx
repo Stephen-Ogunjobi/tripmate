@@ -21,7 +21,6 @@ export default function TripEditDetails({ trip, onEditTrip }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState(null);
 
-  // Activity modal states
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [selectedDayForActivity, setSelectedDayForActivity] = useState(null);
   const [tripActivities, setTripActivities] = useState({});

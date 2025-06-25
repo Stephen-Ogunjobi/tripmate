@@ -74,7 +74,6 @@ export default function FeaturedHighlights() {
     { number: 4.9, suffix: "★", label: "User Rating", decimal: true },
   ];
 
-  // StatCounter component for individual stat items
   const StatCounter = ({ stat, isVisible }) => {
     const [count, setCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
@@ -126,7 +125,6 @@ export default function FeaturedHighlights() {
     );
   };
 
-  // Intersection Observer for stats animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

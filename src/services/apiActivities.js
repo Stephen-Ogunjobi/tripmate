@@ -10,7 +10,6 @@ export async function getActivities(
   category = "",
   limit = 20
 ) {
-  // Build query parameters
   const params = new URLSearchParams({
     ll: `${latitude},${longitude}`,
     limit: limit.toString(),
@@ -18,9 +17,7 @@ export async function getActivities(
     sort: "DISTANCE",
   });
 
-  // Add category filter if specified
   if (category) {
-    // Map category names to Foursquare category IDs or names
     const categoryMap = {
       museums: "10027",
       parks: "16032",
@@ -51,7 +48,6 @@ export async function getActivities(
 
   const data = await res.json();
 
-  // Transform the response to match expected format
   return {
     data: data.results || [],
   };
